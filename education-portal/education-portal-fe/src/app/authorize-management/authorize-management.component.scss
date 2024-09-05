@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  height: 700px;
+  .list-permission-container {
+    border-left: 1px solid black;
+    padding: 16px;
+    flex: 1;
+    .permission {
+      display: flex;
+      gap: 4px;
+    }
+  }
+  .list-role-container {
+    padding: 16px;
+    width: 350px;
+    overflow: auto;
+
+    .role {
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &.active {
+        background-color: #1890ff;
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.header {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

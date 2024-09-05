@@ -1,0 +1,138 @@
+<div class="search-header" #topElement>
+  <nz-select [(ngModel)]="engineType" (ngModelChange)="webCrawlerManagementStore.changeEngine($event)">
+    @for (item of engineTypeOption; track $index) {
+      <nz-option [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+    }
+  </nz-select>
+  <input
+    type="text"
+    nz-input
+    [(ngModel)]="query"
+    (keyup.enter)="webCrawlerManagementStore.searchQuery(query)"
+    placeholder="Search..."
+  />
+  <button
+    nz-button
+    nzType="primary"
+    (click)="webCrawlerManagementStore.searchQuery(query)"
+  >
+    Search
+  </button>
+</div>
+<nz-spin [nzSpinning]="webCrawlerManagementStore.isLoading()">
+  @if (webCrawlerManagementStore.vm(); as vm) {
+    <div class="content">
+      <div class="content-header">
+        @if (vm.results.length > 0) {
+          <button
+            nz-dropdown
+            nzTrigger="click"
+            [nzDropdownMenu]="menu"
+            class="export-data"
+            nz-button
+            nzType="primary"
+          >
+            <span nz-icon nzType="download" nzTheme="outline"></span> Export
+            Data
+          </button>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              @for (item of exportTypeOptions; track $index) {
+                <li
+                  nz-menu-item
+                  (click)="webCrawlerManagementStore.exportData(item.type)"
+                >
+                  <span nz-icon [nzType]="item.icon" nzTheme="outline"></span>
+                  {{ item.label }}
+                </li>
+              }
+            </ul>
+          </nz-dropdown-menu>
+        }
+        <ng-container
+          *ngTemplateOutlet="pagination; context: { $implicit: vm }"
+        ></ng-container>
+      </div>
+
+      @for (data of vm.results; track $index) {
+        <div class="card-info">
+          <h2 class="card-title">{{ data.title?.raw }}</h2>
+          <div class="card-body">
+            <div class="row"><strong>Title:</strong> {{ data.title?.raw }}</div>
+            <div>
+              <strong>Body Content:</strong>
+              <div [innerHTML]="data.body_content?.snippet"></div>
+            </div>
+            <div class="row">
+              <strong>Links:</strong>
+              <div class="list-url">
+                @for (url of data.links?.raw; track $index) {
+                  <a [href]="url" target="_blank">{{ url }}</a>
+                }
+              </div>
+            </div>
+            <div class="row">
+              <strong>Headings:</strong>
+              {{ data.headings?.raw }}
+            </div>
+            <div class="row">
+              <strong>Last Crawled At:</strong>
+              {{ data.last_crawled_at?.raw | date: "medium" }}
+            </div>
+            <div class="row">
+              <strong>URL:</strong>
+              <a [href]="data.url?.raw" target="_blank">{{ data.url?.raw }}</a>
+            </div>
+            <div class="row">
+              <strong>Additional URLs:</strong>
+              <div class="list-url">
+                @for (url of data.additional_urls?.raw; track $index) {
+                  <a [href]="url" target="_blank">{{ url }}</a>
+                }
+              </div>
+            </div>
+            <div class="row">
+              <strong>Domain:</strong>
+              {{ data.domains?.raw }}
+            </div>
+            <div class="row">
+              <strong>URL Scheme:</strong>
+              {{ data.url_scheme?.raw }}
+            </div>
+            <div class="row">
+              <strong>URL Host:</strong>
+              {{ data.url_host?.raw }}
+            </div>
+            <div><strong>URL Port:</strong> {{ data.url_port?.raw }}</div>
+            <div class="row">
+              <strong>URL Path:</strong>
+              {{ data.url_path?.raw }}
+            </div>
+            <div class="row">
+              <strong>URL Path Dir 1:</strong>
+              {{ data.url_path_dir1?.raw }}
+            </div>
+            <div class="row">
+              <strong>URL Path Dir 2:</strong>
+              {{ data.url_path_dir2?.raw }}
+            </div>
+            <div class="row"><strong>ID:</strong> {{ data.id?.raw }}</div>
+          </div>
+        </div>
+      }
+
+      <ng-container
+        *ngTemplateOutlet="pagination; context: { $implicit: vm }"
+      ></ng-container>
+    </div>
+  }
+</nz-spin>
+
+<ng-template #pagination let-vm>
+  <nz-pagination
+    [nzPageIndex]="vm.meta.page.current"
+    [nzTotal]="vm.meta.page.total_results"
+    [nzPageSize]="100"
+    (nzPageIndexChange)="changePageIndex($event)"
+  ></nz-pagination>
+</ng-template>

@@ -1,0 +1,85 @@
+<nz-tabset>
+  <nz-tab nzTitle="Map"
+    ><iframe
+      title="Chart USA"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMzQ1MTM4N2MtOTA2Mi00MmEwLThkZjMtYTA0Y2IxZjgxZDc3IiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+    ></iframe
+  ></nz-tab>
+
+  <nz-tab nzTitle="Report">
+    <nz-select class="report-option" [(ngModel)]="currentVisibleChart">
+      @for (item of reportChartOptions; track $index) {
+        <nz-option [nzValue]="item" [nzLabel]="item"></nz-option>
+      }
+    </nz-select>
+    <iframe
+      title="8 States"
+      src="https://app.powerbi.com/view?r=eyJrIjoiY2Y2Njk4ZDItNWIwNy00MjY4LWJjZGEtNjU2YjhmYTYxZGEwIiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== '8 States'"
+    ></iframe>
+
+    <iframe
+      title="PBI-ND 509"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMDljMDUyYjctOTRiZC00MzA2LWFiYzctZTUzM2I4YTYxNTcyIiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-ND'"
+    ></iframe>
+
+    <iframe
+      title="PBI-WV 682"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiNTFjOGE0M2QtMjJlOS00MjMwLTg3MWItOWI4NGVjODAxZjY3IiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-WV'"
+    ></iframe>
+
+    <iframe
+      title="PBI-SC 600"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiOWUxOGQyZWUtMTBhMi00NmRhLThhZmYtY2RiOGY3OTMxYzMwIiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-SC'"
+    ></iframe>
+
+    <iframe
+      title="PBI-NH 501"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiYTdlNDZhZjgtYjkyMS00MjU4LTg1YWUtM2IwMGI5ZTUzMGJmIiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-NH'"
+    ></iframe>
+
+    <iframe
+      title="PBI-ME 593"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMmUzYmM0M2ItNTUwZi00MGIxLTg4NGUtMjFjZmY1ZTY1YzRhIiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-ME'"
+    ></iframe>
+
+    <iframe
+      title="PBI-AK 488"
+      width="600"
+      height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiNzU1YWNlYmItY2E5Yi00NTIwLThkODctYzVmMWZkMmM3OTI5IiwidCI6IjYxYjY0M2Q5LTM4YWItNDZkMy1iZTBiLTMwYzU5ODk1ZTFlZiIsImMiOjEwfQ%3D%3D"
+      frameborder="0"
+      allowFullScreen="true"
+      [class.hidden]="currentVisibleChart !== 'PBI-AK'"
+    ></iframe>
+  </nz-tab>
+</nz-tabset>

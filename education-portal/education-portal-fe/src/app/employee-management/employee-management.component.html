@@ -1,0 +1,127 @@
+<div class="header">
+  <div>
+    <label>Name:</label>
+    <input
+      type="text"
+      nz-input
+      placeholder="Input employee name"
+      [(ngModel)]="nameFilter"
+      (ngModelChange)="employeeManagementStore.searchName($event)"
+    />
+  </div>
+  <div>
+    <label>Position: </label>
+    <input
+      type="text"
+      nz-input
+      placeholder="Input position"
+      [(ngModel)]="positionFilter"
+      (ngModelChange)="employeeManagementStore.searchPosition($event)"
+    />
+  </div>
+  <div>
+    <label>Status:</label>
+    <nz-select
+      [(ngModel)]="statusFilter"
+      (ngModelChange)="employeeManagementStore.changeStatusFilter($event)"
+    >
+      @for (item of employeeStatusOptions; track $index) {
+        <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
+      }
+    </nz-select>
+  </div>
+  <button nz-button nzType="primary" (click)="openCreateEmployeeModal()">
+    Create Employee
+  </button>
+</div>
+@if (employeeManagementStore.vm(); as vm) {
+  <nz-table
+    [nzScroll]="{ x: '600px' }"
+    #employeeTable
+    [nzShowPagination]="true"
+    [nzFrontPagination]="false"
+    [nzData]="vm.items"
+    [nzLoading]="employeeManagementStore.isLoading()"
+    [nzPageIndex]="vm.pageIndex"
+    [nzPageSize]="vm.pageSize"
+    [nzTotal]="vm.totalCount"
+    (nzPageIndexChange)="employeeManagementStore.changePageIndex($event)"
+  >
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th nzWidth="350px">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of employeeTable.data; track item.id) {
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.contactNumber }}</td>
+          <td>{{ item.position }}</td>
+          <td>{{ item.department }}</td>
+          <td>{{ item.status }}</td>
+          <td>
+            <div class="btn-group">
+              @if (item.status !== EMPLOYEE_STATUS.Terminated) {
+                <button
+                  nz-button
+                  nz-popconfirm
+                  nzDanger
+                  nzPopconfirmTitle="Are you sure to terminate this employee?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="
+                    employeeManagementStore.terminateEmployee(item.id)
+                  "
+                >
+                  Terminate
+                </button>
+              }
+              @if (item.status !== EMPLOYEE_STATUS.Inactive) {
+                <button
+                  nz-button
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure to inactivate this employee?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="
+                    employeeManagementStore.inactivateEmployee(item.id)
+                  "
+                >
+                  Inactivate
+                </button>
+              }
+              @if (item.status !== EMPLOYEE_STATUS.Active) {
+                <button
+                  nz-button
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure to activate this employee?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="
+                    employeeManagementStore.activateEmployee(item.id)
+                  "
+                >
+                  Activate
+                </button>
+              }
+              <button
+                nz-button
+                nzType="primary"
+                (click)="openUpdateEmployeeModal(item)"
+              >
+                Update
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+}
